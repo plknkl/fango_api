@@ -1,0 +1,43 @@
+version: "3.6"
+
+services:
+  postgres:
+    container_name: postgres_container
+    image: postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-dbpass}
+      PGDATA: /data/postgres
+    volumes:
+       - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+  
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+    volumes:
+       - pgadmin:/root/.pgadmin
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+    restart: unless-stopped
+
+  rest:
+    container_name: rest_container
+    build: REST/.                                                               
+    image: rest                                                                 
+    command: gunicorn --bind 0.0.0.0:5000 app:app --log-level info                               
+    depends_on:                                                                 
+      - postgres                                                                
+    ports:                                                                      
+      - "5000:5000"
+    volumes:
+      - ./REST:/app
+
+volumes:
+    postgres:
+    pgadmin:
