@@ -29,7 +29,9 @@ services:
   rest:
     container_name: rest_container
     build: REST/.                                                               
-    image: rest                                                                 
+    image: rest
+    environment:
+      DATABASE_URL: ${DATABASE_URL:-postgresql://postgres:dbpass@postgres/}                                                              
     command: gunicorn --bind 0.0.0.0:5000 app:app --log-level info                               
     depends_on:                                                                 
       - postgres                                                                
