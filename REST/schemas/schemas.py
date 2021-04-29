@@ -10,6 +10,7 @@ class ShowSchema(SQLAlchemySchema):
 
     id = auto_field()
     title = auto_field()
+    host = auto_field()
     description = auto_field()
     bio = auto_field()
     image = auto_field()

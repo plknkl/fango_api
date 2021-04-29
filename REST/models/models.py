@@ -9,6 +9,7 @@ class Show(db.Model):
     __tablename__ = 'show'
     id = Column(Integer, primary_key=True)
     title = Column(Text, unique=True, nullable=False)
+    host = Column(Text, nullable=True)
     description = Column(Text, nullable=True)
     bio = Column(Text, nullable=True)
     image = Column(Text, nullable=True)
