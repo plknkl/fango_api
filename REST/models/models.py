@@ -24,6 +24,8 @@ class Episode(db.Model):
     id = Column(Integer, primary_key=True)
     show_id = Column(Integer, ForeignKey('show.id'))
     title = Column(Text, unique=True, nullable=False)
+    share_link = Column(Text, unique=True, nullable=False)
+    iframe = Column(Text, unique=True, nullable=True)
     description = Column(Text, nullable=True)
     image = Column(Text, nullable=True)
     tracklist = Column(ARRAY(PickleType), nullable=True)

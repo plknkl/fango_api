@@ -24,6 +24,8 @@ class EpisodeSchema(SQLAlchemySchema):
 
     id = auto_field()
     show_id = auto_field()
+    share_link = auto_field()
+    iframe = auto_field()
     title = auto_field()
     description = auto_field()
     image = auto_field()

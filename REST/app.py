@@ -124,8 +124,14 @@ def delete_show(show_id):
 @app.route('/shows/<show_id>')
 def get_show(show_id):
     show = Show.query.get(show_id)
-    return jsonify(show_schema.dump(show))
-    
+    if show:
+        episodes = Episode.query.filter(Episode.show_id == show_id)
+        json_show = show_schema.dump(show)
+        json_episodes = [episode_schema.dump(x) for x in episodes]
+        json_show['episodes'] = json_episodes
+        return jsonify(json_show)
+    else: 
+        return None
 
 # EPISODES
 @app.route('/shows/<show_id>/episodes', methods=['GET'])
